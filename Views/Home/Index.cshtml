@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Story</h2>
+
+        <p>Poor deliveryman! He has been given a long list of customer locations waiting for food from restaurant. It seems impossible to fullfill all these orders this year.</p>
+
+        <h2>Rules</h2>
+
+        <p>You are expected to provide the deliveryman an ordering of his list that minimizes distance he has to traverse. Deliveryman will process your instructions sequentially -- he's simply not strong enough to carry more than one dinner at a time. He will start at the location of the first restaurant, move to the corresponding customer from here, then he will move to the location of the second restaurant -- and so on.</p>
+
+        <p>See <a href="@Url.Action("List", "Home")">the list of orders</a>. It's a text file with 5-tuples of order ID, GPS locations for customer and the pub he awaits the food from. It looks like this:</p>
+
+        <pre>
+1;50.0811997N;14.4441381E;50.0840358N;14.4523817E
+2;50.0811997N;14.4441381E;50.0840358N;14.4523817E
+3;50.0811997N;14.4441381E;50.0840358N;14.4523817E
+[...]
+</pre>
+
+        <p>Each line of your solution should contain an order ID from the input file:</p>
+
+        <pre>
+3
+1
+2
+[...]
+</pre>
+
+        <p>The list of IDs you submit has to be complete for your solution to be considered. Between all accepted solutions, we will pick primarily based on the final length.</p>
+    </div>
+    <div class="col-md-6">
+        <h2>Verify</h2>
+
+        <p>Here you can check qualities of your solution.</p>
+
+        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
+            <input type="file" name="Solution" /> <input type="submit" value="Check" />
+        </form>
+
+        @if (@ViewData.Model.Length != null)
+        {
+            <h3>Submission result: @ViewData.Model.Length.ToString("0.###") km</h3>
+        }
+
+        @if (@ViewData.Model.ProblemWithSolution)
+        {
+            <h3>Your solution is not correct. Please recheck that your output corresponds to the rules.</h3>
+        }
+    </div>
+</div>

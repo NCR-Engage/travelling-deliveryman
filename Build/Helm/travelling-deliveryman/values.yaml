@@ -1,0 +1,33 @@
+replicaCount: 3
+
+image:
+  repository: ncrnolo/travellingdeliveryman
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - contest.ncrlab.cz
+    - travelling-deliveryman.k8s.nolo.ncrlab.cz
+  tls:
+    - secretName: travelling-deliveryman-tls
+      hosts:
+      - contest.ncrlab.cz
+      - travelling-deliveryman.k8s.nolo.ncrlab.cz
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

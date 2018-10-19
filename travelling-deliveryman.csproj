@@ -5,6 +5,7 @@
     <NETCoreAppMaximumVersion>99.9</NETCoreAppMaximumVersion>
     <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
     <UserSecretsId>ab508bf2-ddbb-41f9-80cf-9cfcd804c99f</UserSecretsId>
+    <DockerTargetOS>Linux</DockerTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
   </ItemGroup>
 
 </Project>

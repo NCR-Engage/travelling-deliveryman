@@ -33,22 +33,66 @@
         <p>The list of IDs you submit has to be complete for your solution to be considered. Between all accepted solutions, we will pick primarily based on the final length.</p>
     </div>
     <div class="col-md-6">
-        <h2>Verify</h2>
+        <h2>Enter the contest</h2>
 
-        <p>Here you can check qualities of your solution.</p>
+        <p>With or without a solution ready, feel free to register with us to get updates about Open Door day.</p>
 
         <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
-            <input type="file" name="Solution" /> <input type="submit" value="Check" />
+            <div class="form-group">
+                <label for="nameLabel">Name</label>
+                <input type="text" name="name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="nameLabel">E-mail</label>
+                <input type="email" name="email" class="form-control" />
+                <small id="emailHelp" class="form-text text-muted">We won't retain your data after the contest is over</small>
+            </div>
+
+            <div class="form-group">
+                <label for="nameLabel">Do you want to come to Open Door day?</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="openDoor" id="openDoorFirst" value="first" checked="checked">
+                    <label class="form-check-label" for="openDoorFirst">Yes, I'll come 31st October (that's Wednesday)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="openDoor" id="openDoorSecond" value="second">
+                    <label class="form-check-label" for="openDoorSecond">Yes, I'll come 19th November (that's Monday)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="openDoor" id="openDoorNo" value="no">
+                    <label class="form-check-label" for="openDoorNo">No</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nameLabel">Solution</label>
+                <input type="file" name="Solution" class="form-control-file" />
+                <small id="emailHelp" class="form-text text-muted">If you enter your solution, we will add it to the leaderboard. You will be able to resubmit, just use the same e-mail.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit solution</button>
         </form>
 
-        @if (@ViewData.Model.Length != null)
-        {
-            <h3>Submission result: @ViewData.Model.Length.ToString("0.###") km</h3>
-        }
+        <h2>Leaderboard</h2>
 
-        @if (@ViewData.Model.ProblemWithSolution)
-        {
-            <h3>Your solution is not correct. Please recheck that your output corresponds to the rules.</h3>
-        }
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Path length</th>
+            </tr>
+            <tr>
+                <td>Hungry Contestant</td>
+                <td>102</td>
+            </tr>
+            <tr>
+                <td>Input-Oriented Contestant</td>
+                <td>123</td>
+            </tr>
+            <tr>
+                <td>Confused Contestant</td>
+                <td>245</td>
+            </tr>
+        </table>
     </div>
 </div>

@@ -1,0 +1,21 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: {{ template "travelling-deliveryman.fullname" . }}-certificate
+spec:
+  secretName: travelling-deliveryman-tls
+  dnsNames:
+  {{- range .Values.ingress.hosts }}
+  - {{ . }}
+  {{- end }}
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      {{- range .Values.ingress.hosts }}
+      - {{ . }}
+      {{- end }}
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

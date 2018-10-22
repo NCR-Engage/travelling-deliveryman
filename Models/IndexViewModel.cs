@@ -8,6 +8,8 @@ namespace Ncr.TravellingDeliveryman.Models
 {
     public class IndexViewModel
     {
+        public bool Kiosk { get; set; }
+
         public IFormFile Solution { get; set; }
 
         public decimal? Length { get; set; }

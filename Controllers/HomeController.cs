@@ -14,7 +14,7 @@ namespace travelling_deliveryman.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<IActionResult> Index(IndexViewModel submittedSolution)
+        public async Task<IActionResult> Index(IndexViewModel submittedSolution, [FromQuery]bool kiosk)
         {
             if (submittedSolution?.Solution != null)
             {
@@ -38,6 +38,8 @@ namespace travelling_deliveryman.Controllers
                     submittedSolution.ProblemWithSolution = true;
                 }
             }
+
+            submittedSolution.Kiosk = kiosk;
 
             return View(submittedSolution);
         }

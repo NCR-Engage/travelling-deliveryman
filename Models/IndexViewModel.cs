@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
+using Ncr.TravellingDeliveryman.Repositories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ncr.TravellingDeliveryman.Models
 {
@@ -10,10 +8,20 @@ namespace Ncr.TravellingDeliveryman.Models
     {
         public bool Kiosk { get; set; }
 
+        public string Name { get; set; }
+
+        public string EMail { get; set; }
+
+        public string OpenDoor { get; set; }
+
         public IFormFile Solution { get; set; }
 
-        public decimal? Length { get; set; }
-
+        public double? Length { get; set; }
+        
         public bool ProblemWithSolution { get; set; }
+
+        public bool ProblemWithRegistration { get; set; }
+
+        public IList<SolutionlessSolution> BestSolutions { get; set; }
     }
 }

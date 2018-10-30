@@ -1,43 +1,46 @@
-﻿using System;
+﻿using Ncr.TravellingDeliveryman.Services.Distances;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Ncr.TravellingDeliveryman.Services.ProblemGenerator;
 
 namespace Ncr.TravellingDeliveryman.Services
 {
-    public static class SolutionEvaluator
+    public interface ISolutionEvaluator
     {
-        public static decimal Evaluate(IEnumerable<int> solution)
-        {
-            var problem = GetProblem().ToDictionary(k => k.orderId);
-            var totalLength = 0M;
+        double Evaluate(IEnumerable<int> solution);
+    }
 
-            Step? lastStep = null;
+    public class SolutionEvaluator : ISolutionEvaluator
+    {
+        private readonly IDistanceCalculator _distanceCalculator;
+        private readonly IProblemGenerator _problemGenerator;
+
+        public SolutionEvaluator(IDistanceCalculator distanceCalculator, IProblemGenerator problemGenerator)
+        {
+            _distanceCalculator = distanceCalculator ?? throw new ArgumentNullException(nameof(distanceCalculator));
+            _problemGenerator = problemGenerator ?? throw new ArgumentNullException(nameof(problemGenerator));
+        }
+
+        public double Evaluate(IEnumerable<int> solution)
+        {
+            var problem = _problemGenerator.GetProblem().ToDictionary(k => k.OrderId);
+            var totalLength = 0.0;
+
+            Coord? lastLocation = null;
             foreach (var stepOrderId in solution)
             {
                 var step = problem[stepOrderId];
 
-                if (lastStep != null)
+                if (lastLocation.HasValue)
                 {
-                    totalLength += GetDistance(new Step(0, lastStep.Value.latr, lastStep.Value.longr, step.latc, step.longc));
+                    totalLength += _distanceCalculator.GetDistanceInKm(lastLocation.Value, step.RestaurantLocation);
                 }
 
-                totalLength += GetDistance(step);
-                lastStep = step;
+                totalLength += _distanceCalculator.GetDistanceInKm(step.CustomerLocation, step.RestaurantLocation);
+                lastLocation = step.CustomerLocation;
             }
 
             return totalLength;
-        }
-
-        private static decimal GetDistance(Step s)
-        {
-            var latDistPer = 111.0;
-            var longDistPer = 71.0;
-
-            var latDist = (s.latc - s.latr) * latDistPer;
-            var longDist = (s.longc - s.longr) * longDistPer;
-
-            return Convert.ToDecimal(Math.Sqrt(latDist * latDist + longDist * longDist));
         }
     }
 }

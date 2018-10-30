@@ -1,6 +1,4 @@
-using System;
-
-namespace travelling_deliveryman.Models
+namespace Ncr.TravellingDeliveryman.Models
 {
     public class ErrorViewModel
     {

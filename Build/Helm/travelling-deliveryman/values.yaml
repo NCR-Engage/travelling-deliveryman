@@ -2,12 +2,13 @@ replicaCount: 3
 
 image:
   repository: ncrnolo/travellingdeliveryman
-  tag: latest
+  tag: sha256:73d637f0b3c5571c59fa6ea8ffc07ac709345a61bcbc8ba0a873f9701e5038f0
   pullPolicy: Always
 
 service:
   type: ClusterIP
   port: 80
+  connectionString: "nothing"
 
 ingress:
   enabled: true

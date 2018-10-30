@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Ncr.TravellingDeliveryman.Models.IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -13,11 +15,22 @@
         <div class="col-md-6">
             <h2>Story</h2>
 
-            <p>Poor deliveryman! He has been given a long list of customer locations waiting for food from restaurant. It seems impossible to fullfill all these orders this year.</p>
+            <p>
+                Poor deliveryman! He has been given a long list of customer locations waiting
+                for food from various restaurants. It seems impossible to fullfill all these
+                orders by the end of the year…
+            </p>
 
             <h2>Rules</h2>
 
-            <p>You are expected to provide the deliveryman an ordering of his list that minimizes distance he has to traverse. Deliveryman will process your instructions sequentially -- he's simply not strong enough to carry more than one dinner at a time. He will start at the location of the first restaurant, move to the corresponding customer from here, then he will move to the location of the second restaurant -- and so on.</p>
+            <p>
+                You are expected to provide the deliveryman with an <b>ordering</b> of his list that
+                minimizes distance he has to traverse. The deliveryman will process your
+                instructions sequentially – he's simply not strong enough to carry more than
+                one dinner at a time. He will start at the location of the first restaurant,
+                move to the corresponding customer from there, then he will move to the
+                location of the second restaurant – and so on.
+            </p>
 
             <p>See <a href="@Url.Action("List", "Home")">the list of orders</a>. It's a text file with 5-tuples of order ID, GPS locations for customer and the pub he awaits the food from. It looks like this:</p>
 
@@ -37,85 +50,109 @@
 [...]
 </pre>
 
+            <p>This is an open data (i.e., <a href="https://projecteuler.net/">Project Euler</a>-like) challenge. You have been given the input dataset, you are expected to return a text file with a solution, not a code you used.</p>
+
+            <p>The deadline is Tuesday 30th October 2018, at noon, <a href="https://en.wikipedia.org/wiki/Central_European_Time">CET</a>. Good luck!</p>
+
             <h3>Nuances of the rules</h3>
 
             <ul>
                 <li>The list of IDs you submit has to be complete for your solution to be considered. Between all accepted solutions, we will pick primarily based on the final length (the shorter, the better), secondarily based on submission time (the earlier, the better).</li>
                 <li>You have to be a student of ČVUT or MFF UK to be eligible for the prize.</li>
-                <li>For the purpose of the contest, it is our evaluator that decides what is the final length of a solution. It does not compute <a href="https://en.wikipedia.org/wiki/Geographical_distance">geodetic distance</a> for example, it uses simple planar geometry.</li>
+                <li>For the purpose of the contest, it is our evaluator that decides what is the final length of a solution. It does not compute <a href="https://en.wikipedia.org/wiki/Geographical_distance">geodetic distance</a> for example – it uses simple planar geometry.</li>
+                <li>On the other hand, the leaderboard we provide online does not provide final verdict in a case there is a blatant mistake at the site that would allow "solutions" that are against the spirit of the task. If you submit a solution, we will send you final results after the deadline.</li>
             </ul>
         </div>
     }
 
-        <div class="col-md-6">
-            <h2>Enter the contest</h2>
+    <div class="col-md-6">
+        <div style="height: 200px; line-height: 200px; width: 100%; background-color: rgb(84, 185, 72); color: white; font-size: xx-large; text-transform: uppercase; text-align: center">
+            @if (Model.Kiosk)
+            {
+                <span>NCR</span>
+            }
+            else
+            {
+                <span>Travelling deliveryman</span>
+            }
+        </div>
+
+        @if (Model.Kiosk)
+        {
+            <h2>Registration</h2>
+        }
+        else
+        {
+            <h2>Submit a solution</h2>
+        }
+
+        <form method="post" enctype="multipart/form-data" action="@(Model.Kiosk ? "/?kiosk=true" : "/")">
+            <div class="form-group">
+                <label for="nameLabel">Name</label>
+                <input type="text" name="Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="nameLabel">E-mail</label>
+                <input type="email" name="EMail" class="form-control" />
+            </div>
+
+            @if (Model.Kiosk)
+            {
+                <div class="form-group">
+                    <label for="nameLabel">Do you want to come to Open Door day?</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OpenDoor" id="openDoorFirst" value="october" checked="checked">
+                        <label class="form-check-label" for="openDoorFirst">Yes, I'll come 31st October (that's Wednesday)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OpenDoor" id="openDoorSecond" value="november">
+                        <label class="form-check-label" for="openDoorSecond">Yes, I'll come 19th November (that's Monday)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OpenDoor" id="openDoorNo" value="wontCome">
+                        <label class="form-check-label" for="openDoorNo">No</label>
+                    </div>
+                </div>
+            }
 
             @if (!Model.Kiosk)
             {
-                <p>With or without a solution ready, feel free to register with us to get updates about Open Door day.</p>
+                <div class="form-group">
+                    <label for="nameLabel">Solution</label>
+                    <input type="file" name="Solution" class="form-control-file" />
+                    <small id="emailHelp" class="form-text text-muted">Feel free to resubmit if you come up with a better solution in the future.</small>
+                </div>
             }
 
-                <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
-                    <div class="form-group">
-                        <label for="nameLabel">Name</label>
-                        <input type="text" name="name" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nameLabel">E-mail</label>
-                        <input type="email" name="email" class="form-control" />
-                        <small id="emailHelp" class="form-text text-muted">We won't retain your data after the contest is over</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nameLabel">Do you want to come to Open Door day?</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="openDoor" id="openDoorFirst" value="first" checked="checked">
-                            <label class="form-check-label" for="openDoorFirst">Yes, I'll come 31st October (that's Wednesday)</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="openDoor" id="openDoorSecond" value="second">
-                            <label class="form-check-label" for="openDoorSecond">Yes, I'll come 19th November (that's Monday)</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="openDoor" id="openDoorNo" value="no">
-                            <label class="form-check-label" for="openDoorNo">No</label>
-                        </div>
-                    </div>
-
-                    @if (!Model.Kiosk)
-                    {
-                        <div class="form-group">
-                            <label for="nameLabel">Solution</label>
-                            <input type="file" name="Solution" class="form-control-file" />
-                            <small id="emailHelp" class="form-text text-muted">If you enter your solution, we will add it to the leaderboard. You will be able to resubmit, just use the same e-mail.</small>
-                        </div>
-                    }
-
-                    <button type="submit" class="btn btn-primary">@if (Model.Kiosk) { <b>Register</b> } else { <b>Submit solution</b> }</button>
-                </form>
-
-                <!--
-        <h2>Leaderboard</h2>
-
-        <table class="table table-striped">
-            <tr>
-                <th>Name</th>
-                <th>Path length</th>
-            </tr>
-            <tr>
-                <td>Hungry Contestant</td>
-                <td>102</td>
-            </tr>
-            <tr>
-                <td>Input-Oriented Contestant</td>
-                <td>123</td>
-            </tr>
-            <tr>
-                <td>Confused Contestant</td>
-                <td>245</td>
-            </tr>
-        </table>
-        -->
+            <div class="form-group">
+                <p><small id="emailHelp" class="form-text text-muted">We will use your data only for the purpose of contest and Open Doors organization. We won't retain your data after the contest is over.</small></p>
+                <button type="submit" class="btn btn-primary" style="background-color: rgb(84, 185, 72); border-color: rgb(84, 185, 72)">
+                    @if (Model.Kiosk)
+                    {<b>Register</b> }
+                    else
+                    { <b>Submit solution</b>}
+                </button>
             </div>
+        </form>
+
+        @if (!Model.Kiosk && Model.BestSolutions != null)
+        {
+            <h2>Leaderboard</h2>
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Path length in km</th>
+                </tr>
+                @foreach (var solution in Model.BestSolutions)
+                {
+                    <tr>
+                        <td>@solution.Name</td>
+                        <td>@Convert.ToInt32(solution.Length)</td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
 </div>

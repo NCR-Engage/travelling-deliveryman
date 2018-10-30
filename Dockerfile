@@ -16,4 +16,4 @@ RUN dotnet publish "travelling-deliveryman.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "travelling-deliveryman.dll"]
+ENTRYPOINT ["dotnet", "Ncr.TravellingDeliveryman.dll"]

@@ -5,7 +5,8 @@
     <NETCoreAppMaximumVersion>99.9</NETCoreAppMaximumVersion>
     <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
     <UserSecretsId>ab508bf2-ddbb-41f9-80cf-9cfcd804c99f</UserSecretsId>
-    <DockerTargetOS>Linux</DockerTargetOS>
+    <RootNamespace>Ncr.TravellingDeliveryman</RootNamespace>
+    <AssemblyName>Ncr.TravellingDeliveryman</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +14,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
+    <PackageReference Include="Npgsql" Version="4.0.3" />
+    <PackageReference Include="RestSharp" Version="106.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Home\RegistrationSuccess.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>
